@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+/**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ *
+ * @category   Utilities
+ * @package    Clockworkgeek_Guestcookies
+ * @author     Daniel Deady <daniel@clockworkgeek.com>
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Clockworkgeek_Guestcookies>
+            <version>0.1.0</version>
+        </Clockworkgeek_Guestcookies>
+    </modules>
+    <global>
+        <helpers>
+            <guestcookies>
+                <class>Clockworkgeek_Guestcookies_Helper</class>
+            </guestcookies>
+        </helpers>
+        <models>
+            <guestcookies>
+                <class>Clockworkgeek_Guestcookies_Model</class>
+                <resourceModel>guestcookies_resource</resourceModel>
+            </guestcookies>
+            <guestcookies_resource>
+                <class>Clockworkgeek_Guestcookies_Model_Resource</class>
+                <entities>
+                	<quote>
+                		<table>guestcookies_quote</table>
+                	</quote>
+                </entities>
+            </guestcookies_resource>
+        </models>
+        <resources>
+        	<guestcookies_setup>
+        		<setup>
+        			<module>Clockworkgeek_Guestcookies</module>
+        		</setup>
+        	</guestcookies_setup>
+        	<!-- Not necessary to specify these defaults, but keep for backwards compatibility. -->
+        	<guestcookies_read>
+        		<connection>
+        			<use>core_read</use>
+        		</connection>
+        	</guestcookies_read>
+        	<cookie_write>
+        		<connection>
+        			<use>core_write</use>
+        		</connection>
+        	</cookie_write>
+        </resources>
+    </global>
+
+    <frontend>
+    	<events>
+    		<controller_action_predispatch>
+    			<observers>
+		    		<!-- Earliest chance to swap cart for returning guest. -->
+		    		<!-- controller_front_init_* is earlier but session is not ready. -->
+    				<guestcookies_quote>
+    					<class>guestcookies/observer</class>
+    					<method>readCartCookie</method>
+    					<type>singleton</type>
+    				</guestcookies_quote>
+    				<guestcookies_viewed>
+    					<class>guestcookies/observer</class>
+    					<method>readViewedCookie</method>
+    					<type>singleton</type>
+    				</guestcookies_viewed>
+    				<guestcookies_compare>
+    					<class>guestcookies/observer</class>
+    					<method>readCompareCookie</method>
+    					<type>singleton</type>
+    				</guestcookies_compare>
+    			</observers>
+    		</controller_action_predispatch>
+    		<!-- Last opportunity to write headers. Session might have changed before this. -->
+    		<controller_front_send_response_before>
+    			<observers>
+    				<guestcookies_quote>
+    					<class>guestcookies/observer</class>
+    					<method>writeCartCookie</method>
+    					<type>singleton</type>
+    				</guestcookies_quote>
+    				<guestcookies_viewed>
+    					<class>guestcookies/observer</class>
+    					<method>writeViewedCookie</method>
+    					<type>singleton</type>
+    				</guestcookies_viewed>
+    				<guestcookies_compare>
+    					<class>guestcookies/observer</class>
+    					<method>writeCompareCookie</method>
+    					<type>singleton</type>
+    				</guestcookies_compare>
+    			</observers>
+    		</controller_front_send_response_before>
+    	</events>
+    </frontend>
+
+    <default>
+    	<web>
+    		<guestcookies>
+    			<!-- 10 Years -->
+    			<cookie_lifetime>315576000</cookie_lifetime>
+    			<quote_name>cart</quote_name>
+    			<compare_name>compare</compare_name>
+    			<viewed_name>viewed</viewed_name>
+    		</guestcookies>
+    	</web>
+    </default>
+
+    <adminhtml>
+    	<translate>
+    		<modules>
+    			<Clockworkgeek_Guestcookies>
+    				<files>
+    					<default>Clockworkgeek_Guestcookies.csv</default>
+    				</files>
+    			</Clockworkgeek_Guestcookies>
+    		</modules>
+    	</translate>
+    </adminhtml>
+</config>
