@@ -26,6 +26,7 @@ class Clockworkgeek_Guestcookies_Model_Observer
 			// registered users are of no interest.
 			return;
 		}
+		/* @var $checkoutSession Mage_Checkout_Model_Session */
 		$checkoutSession = Mage::getSingleton('checkout/session');
 		if ($checkoutSession->getQuoteId()) {
 			// cart already in use, do not override
@@ -34,6 +35,8 @@ class Clockworkgeek_Guestcookies_Model_Observer
 		$quote = Mage::getSingleton('guestcookies/quote')->readCookie();
 		if ($quote->getId()) {
 			$checkoutSession->setQuoteId($quote->getId());
+			// checkout state preserves addresses and payments
+			$checkoutSession->setCheckoutState(Mage_Checkout_Model_Session::CHECKOUT_STATE_BEGIN);
 		}
 	}
 

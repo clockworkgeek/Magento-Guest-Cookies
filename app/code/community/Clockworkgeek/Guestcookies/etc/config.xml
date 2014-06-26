@@ -18,10 +18,22 @@
 <config>
     <modules>
         <Clockworkgeek_Guestcookies>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </Clockworkgeek_Guestcookies>
     </modules>
     <global>
+        <blocks>
+            <checkout>
+                <rewrite>
+                    <!-- Rewrite parts of checkout page to use existing address where available -->
+                    <onepage_billing>Clockworkgeek_Guestcookies_Block_Onepage_Billing</onepage_billing>
+                    <onepage_shipping>Clockworkgeek_Guestcookies_Block_Onepage_Shipping</onepage_shipping>
+                </rewrite>
+            </checkout>
+            <guestcookies>
+                <class>Clockworkgeek_Guestcookies_Block</class>
+            </guestcookies>
+        </blocks>
         <helpers>
             <guestcookies>
                 <class>Clockworkgeek_Guestcookies_Helper</class>
