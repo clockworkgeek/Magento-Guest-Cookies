@@ -35,8 +35,8 @@ class Clockworkgeek_Guestcookies_Model_Observer
 		$quote = Mage::getSingleton('guestcookies/quote')->readCookie();
 		if ($quote->getId()) {
 			$checkoutSession->setQuoteId($quote->getId());
-			// checkout state preserves addresses and payments
-			$checkoutSession->setCheckoutState(Mage_Checkout_Model_Session::CHECKOUT_STATE_BEGIN);
+			// preserve addresses and payments
+			$checkoutSession->resetCheckout();
 		}
 	}
 
