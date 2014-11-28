@@ -14,7 +14,7 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Clockworkgeek_Guestcookies_Block_Onepage_Shipping extends Mage_Checkout_Block_Onepage_Billing
+class Clockworkgeek_Guestcookies_Block_Onepage_Shipping extends Mage_Checkout_Block_Onepage_Shipping
 {
 
     public function getAddress()
