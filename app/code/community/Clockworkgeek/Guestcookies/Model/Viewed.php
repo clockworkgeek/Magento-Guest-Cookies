@@ -33,9 +33,14 @@ class Clockworkgeek_Guestcookies_Model_Viewed
 	{
 		if ($ids) {
 			foreach ($ids as $id) {
-				Mage::getModel('reports/product_index_viewed')
-					->setProductId($id)
-					->save();
+			    try {
+    				Mage::getModel('reports/product_index_viewed')
+    					->setProductId($id)
+    					->save();
+			    }
+			    catch (Exception $e) {
+			        // do nothing if product ID is missing
+			    }
 			}
 			Mage::getModel('reports/product_index_viewed')
 				->calculate();
