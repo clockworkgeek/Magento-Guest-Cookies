@@ -24,7 +24,7 @@ class Clockworkgeek_Guestcookies_Helper_Data extends Mage_Core_Helper_Data
 	public function isCookieRestricted()
 	{
         $helperClass = Mage::getConfig()->getHelperClassName('core/cookie');
-        if (!class_exists($helperClass)) return false;
+        if (!@class_exists($helperClass)) return false;
 
 		$helper = Mage::helper('core/cookie');
 		return $helper->isUserNotAllowSaveCookie();
