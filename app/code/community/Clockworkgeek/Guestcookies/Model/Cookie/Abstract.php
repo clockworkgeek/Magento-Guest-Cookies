@@ -75,7 +75,9 @@ abstract class Clockworkgeek_Guestcookies_Model_Cookie_Abstract
 	 */
 	protected function _readCookie()
 	{
-		return $this->_getCookie()->get($this->getName());
+		$value = $this->_getCookie()->get($this->getName());
+		// do not cast NULL to string as this results in non-null value
+		return isset($value) ? (string) $value : null;
 	}
 
 	/**
